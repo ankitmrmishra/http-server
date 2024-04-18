@@ -52,23 +52,24 @@ const server = net.createServer((socket) => {
          const filename = path.slice(7); // Extract filename from the path
          const filePath = `${directory}/${filename}`; // Construct the full file path
 
-         fs.access(filePath, fs.constants.F_OK, (err) => {
+        
            // Check if file exists
-           if (err) {
-             socket.write("HTTP/1.1 404 Not Found\r\n\r\n"); // Send 404 for non-existent file
-           } else {
-             fs.readFile(filePath, (err, data) => {
-               // Read file contents
-               if (err) {
-                 socket.write("HTTP/1.1 500 Internal Server Error\r\n\r\n"); // Send 500 for read error
-               } else {
-                 const response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${data.length}\r\n\r\n`;
-                 socket.write(response + data); // Send successful response with file contents
-               }
-             });
-           }
-           socket.end(); // End the connection after sending the response
-         });
+            fs.access(filePath, fs.constants.F_OK, (err) => {
+              if (err) {
+                socket.write("HTTP/1.1 404 Not Found\r\n\r\n"); // Send 404 for non-existent file
+              } else {
+                fs.readFile(filePath, (err, data) => {
+                  // Read file contents
+                  if (err) {
+                    socket.write("HTTP/1.1 500 Internal Server Error\r\n\r\n"); // Send 500 for read error
+                  } else {
+                    const response = `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${data.length}\r\n\r\n`;
+                    socket.write(response + data); // Send successful response with file contents
+                  }
+                });
+              }
+              socket.end(); // End the connection after sending the response
+            });
        } else {
          socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
        }
