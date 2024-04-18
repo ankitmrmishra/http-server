@@ -16,7 +16,7 @@ const server = net.createServer((socket) => {
     
     const request = data.toString().split("\r\n");
     const path = request[0].split(" ")[1];
-    const stringpassed = path.split("/")[1]
+    const stringpassed = path.split("/echo/")[1]
 
      if (path === "/") {
        socket.write("HTTP/1.1 200 OK\r\n\r\n");
