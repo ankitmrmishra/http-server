@@ -13,7 +13,7 @@ const server = net.createServer((socket) => {
   });
    socket.on("error", console.error);
   socket.on("data" , () => {
-    socket.write("HTTP/1.1 200 OK\r\n\r\n");
+    
     const request = data.toString().split("\r\n");
     const path = request[0].split(" ")[1];
 
