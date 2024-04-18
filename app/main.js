@@ -1,5 +1,6 @@
 const { error } = require("console");
 const net = require("net");
+const fs = require("fs")
 const pathe = require("path");
 
 const filePath = process.argv[3];
