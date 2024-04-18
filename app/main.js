@@ -18,7 +18,7 @@ const  server = net.createServer((socket) => {
   socket.on("data" , async (data) => {
     
     const request = data.toString().split("\r\n");
-     let pathRequest = request[0].split(" ");
+    const pathRequest = request[0].split(" ");
     const path = request[0].split(" ")[1];
     const header = request[2].split("User-Agent: ")[1];
     const stringpassed = path.split("/echo/")[1]
