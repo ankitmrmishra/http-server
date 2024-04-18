@@ -46,7 +46,7 @@ const  server = net.createServer((socket) => {
     else if (pathRequest[1].includes("/files/")) {
          if (request[0].includes("POST")) {
            const fileName = pathRequest[1].replace("/files/", "");
-           const file = path.join(filePath, fileName);
+           const file = pathe.join(filePath, fileName);
            const content = request[request.length - 1];
            await fs.promises.writeFile(file, content);
            socket.write("HTTP/1.1 201 Created\r\n\r\n");
