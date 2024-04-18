@@ -44,7 +44,7 @@ const  server = net.createServer((socket) => {
      }
     else if (pathRequest[1].includes("/files/")) {
       const fileName = pathRequest[1].replace("/files/", "");
-      const file = path.join(filePath, fileName);
+      const file = pathRequest.join(filePath, fileName);
       if (fs.existsSync(file)) {
         const content = await fs.promises.readFile(file);
         socket.write(
