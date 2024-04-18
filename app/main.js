@@ -30,7 +30,7 @@ const server = net.createServer((socket) => {
        ans += stringpassed;
        socket.write(ans);
      }
-     else if(path == "/user-agent"){
+     else if(path === "/user-agent"){
          let ans = "";
          ans += "HTTP/1.1 200 OK\r\n";
          ans += "Content-Type:text/plain\r\n";
