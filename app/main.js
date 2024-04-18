@@ -14,8 +14,8 @@ const server = net.createServer((socket) => {
    socket.on("error", console.error);
   socket.on("data" , () => {
     socket.write("HTTP/1.1 200 OK\r\n\r\n");
-    const startline = data.toString().split("\r\n")[0];
-    const path = startline[0].split(" ")[1];
+    const request = data.toString().split("\r\n");
+    const path = request[0].split(" ")[1];
 
      if (path === "/") {
        socket.write("HTTP/1.1 200 OK\r\n\r\n");
