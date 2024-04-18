@@ -23,10 +23,10 @@ const server = net.createServer((socket) => {
      }
      else if (path.startsWith("/echo/")) {
        let ans = "";
-       ans += "HTTP/1.1 200 OK\r\n\r\n";
-       ans += "Content-Type:text/plain\n\r\n";
-       ans += `content.length:${stringpassed.length}\n\r\n`;
-       ans += `\n\r\n${stringpassed}\n\r\n`;
+       ans += "HTTP/1.1 200 OK\r\n";
+       ans += "Content-Type:text/plain\r\n";
+       ans += `content.length:${stringpassed.length}\r\n\r\n`;
+       ans += stringpassed;
        socket.write(ans);
      } else {
        socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
