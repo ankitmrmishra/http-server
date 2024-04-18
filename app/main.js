@@ -1,3 +1,4 @@
+const { error } = require("console");
 const net = require("net");
 
 // You can use print statements as follows for debugging, they'll be visible when running tests.
@@ -10,9 +11,18 @@ const server = net.createServer((socket) => {
     socket.end();
     server.close();
   });
+   socket.on("error", console.error);
   socket.on("data" , () => {
     socket.write("HTTP/1.1 200 OK\r\n\r\n");
+    const startline = data.toString().split("\r\n")[0];
+      const [method, path, httpVersion] = startline.split(" ");
+     if (path === "/") {
+       socket.write("HTTP/1.1 200 OK\r\n\r\n");
+     } else {
+       socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
+     }
   })
+  
 });
 
 server.listen(4221, "localhost");
