@@ -14,9 +14,9 @@ const server = net.createServer((socket) => {
    socket.on("error", console.error);
   socket.on("data" , (data) => {
     
-    const [request, ...headers] = data.toString().split("\r\n");
-  
-   const [method, path, httpVersion] = startline.split(" ");
+    const request = data.toString().split("\r\n");
+    const path = request[0].split(" ")[1];
+    const header = request[2].split("User-Agent: ")[1];
     const stringpassed = path.split("/echo/")[1]
 
      if (path === "/") {
@@ -31,10 +31,6 @@ const server = net.createServer((socket) => {
        socket.write(ans);
      }
      else if(path === "/user-agent"){
-         const useragentHeader = headers.find((s) =>
-           s.startsWith("User-Agent:")
-         );
-         const header = useragentHeader.split("User-Agent: ")[1];
          let ans = "";
          ans += "HTTP/1.1 200 OK\r\n";
          ans += "Content-Type:text/plain\r\n";
