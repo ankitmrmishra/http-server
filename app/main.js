@@ -53,7 +53,7 @@ const server = net.createServer((socket) => {
          const filePath = `${directory}/${filename}`; // Construct the full file path
 
         
-           // Check if file exists
+          
             fs.access(filePath, fs.constants.F_OK, (err) => {
               if (err) {
                 socket.write("HTTP/1.1 404 Not Found\r\n\r\n"); // Send 404 for non-existent file
