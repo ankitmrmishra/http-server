@@ -9,7 +9,7 @@ console.log("Logs from your program will appear here!");
 const server = net.createServer((socket) => {
   socket.on("close", () => {
     socket.end();
-    server.close();
+  
   });
    socket.on("error", console.error);
   socket.on("data" , (data) => {
