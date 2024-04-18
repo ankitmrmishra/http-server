@@ -25,7 +25,7 @@ const server = net.createServer((socket) => {
        let ans = "";
        ans += "HTTP/1.1 200 OK\r\n";
        ans += "Content-Type:text/plain\r\n";
-       ans += `content.length:${stringpassed.length}\r\n\r\n`;
+       ans += `content.Length:${stringpassed.length}\r\n\r\n`;
        ans += stringpassed;
        socket.write(ans);
      } else {
