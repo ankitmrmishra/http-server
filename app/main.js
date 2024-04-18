@@ -18,6 +18,7 @@ const  server = net.createServer((socket) => {
   socket.on("data" , async (data) => {
     
     const request = data.toString().split("\r\n");
+     let pathRequest = request[0].split(" ");
     const path = request[0].split(" ")[1];
     const header = request[2].split("User-Agent: ")[1];
     const stringpassed = path.split("/echo/")[1]
@@ -41,21 +42,21 @@ const  server = net.createServer((socket) => {
          ans += header;
          socket.write(ans);
      }
-    else if(path[1].includes("/files/")) {
-            const fileName = path[1].replace("/files/", "")
-            const file = path.join(filePath, fileName)
-            if (fs.existsSync(file)) {
-                const content = await fs.promises.readFile(file)
-                socket.write(`HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${content.length}\r\n\r\n${content}`);
-            } else {
-                socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
-                socket.end();
-            }
-
-        }
-     else {
-         socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
-       }
+    else if (pathRequest[1].includes("/files/")) {
+      const fileName = pathRequest[1].replace("/files/", "");
+      const file = path.join(filePath, fileName);
+      if (fs.existsSync(file)) {
+        const content = await fs.promises.readFile(file);
+        socket.write(
+          `HTTP/1.1 200 OK\r\nContent-Type: application/octet-stream\r\nContent-Length: ${content.length}\r\n\r\n${content}`
+        );
+      } else {
+        socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
+        socket.end();
+      }
+    } else {
+      socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
+    }
      socket.end();
   })
   
