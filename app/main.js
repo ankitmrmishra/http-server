@@ -16,6 +16,7 @@ const server = net.createServer((socket) => {
     
     const request = data.toString().split("\r\n");
     const path = request[0].split(" ")[1];
+    const header = request[1].split("User-Agent: ")[1];
     const stringpassed = path.split("/echo/")[1]
 
      if (path === "/") {
@@ -28,7 +29,17 @@ const server = net.createServer((socket) => {
        ans += `content-Length:${stringpassed.length}\r\n\r\n`;
        ans += stringpassed;
        socket.write(ans);
-     } else {
+     }
+     else if(path == "/user-agent"){
+         let ans = "";
+         ans += "HTTP/1.1 200 OK\r\n";
+         ans += "Content-Type:text/plain\r\n";
+         ans += `content-Length:${header.length}\r\n\r\n`;
+         ans += header;
+         socket.write(ans);
+     }
+     
+     else {
        socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
      }
      socket.end();
