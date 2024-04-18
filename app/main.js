@@ -16,10 +16,19 @@ const server = net.createServer((socket) => {
     
     const request = data.toString().split("\r\n");
     const path = request[0].split(" ")[1];
+    const stringpassed = path.split("/")[1]
 
      if (path === "/") {
        socket.write("HTTP/1.1 200 OK\r\n\r\n");
-     } else {
+     }
+     else if(path === "/echo/") {
+            let ans = "";
+            ans += "HTTP/1.1 200 OK\r\n\r\n";
+            ans += "Content-Type: text/plainr\n\r\n"; 
+            ans+= `content.length: \r\n ${stringpassed.length}\n\r\n`;
+            ans += `\n\r\n${stringpassed}\n\r\n`;
+            socket.write(ans);
+    }else {
        socket.write("HTTP/1.1 404 Not Found\r\n\r\n");
      }
      socket.end();
